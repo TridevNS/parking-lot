@@ -23,7 +23,7 @@ public class Parking {
      @return
     */
 
-    public void entry(String regNum, String col){
+    public int  entry(String regNum, String col){
 
         Car car = new Car(regNum, col);
 
@@ -36,12 +36,12 @@ public class Parking {
         }
         if(slot == -1){
             System.out.println("Sorry, parking lot is full");
-            return;
+            return -1;
         }
         slots[slot] = car;
 
         System.out.println("Allocated slot number: "+(slot+1));
-
+        return (slot+1);
     }
 
      /*
@@ -49,16 +49,18 @@ public class Parking {
      @return
     */
 
-    public void exit(int slot){
+    public int  exit(int slot){
 
-        if(slot < 1){
-            return;
+        if(slot < 1 || slot > slots.length){
+            System.out.println("Only "+ slots.length + " available");
+            return -1;
         }
 
         Car car = (Car)slots[slot-1];
         slots[slot-1] = null;
 
         System.out.println("Slot number "+ (slot) +" is free");
+        return slot;
     }
 
 
@@ -74,7 +76,7 @@ public class Parking {
         }
     }
 
-    public void slot_numbers_for_cars_with_colour(String color){
+    public String slot_numbers_for_cars_with_colour(String color){
         StringBuilder str = new StringBuilder();
         for(int i=0; i<slots.length; i++){
             if(slots[i] != null){
@@ -86,9 +88,10 @@ public class Parking {
         }
         System.out.println(str.toString().trim());
 
+        return str.toString().trim();
     }
 
-    public void registration_numbers_for_cars_with_colour(String color){
+    public String registration_numbers_for_cars_with_colour(String color){
 
         StringBuilder str = new StringBuilder();
         for(int i=0; i<slots.length; i++){
@@ -100,11 +103,13 @@ public class Parking {
             }
         }
         System.out.println(str.toString().trim());
+
+        return str.toString().trim();
     }
 
 
 
-    public void slot_number_for_registration_number(String number){
+    public int slot_number_for_registration_number(String number){
         int slot = -1;
         for(int i=0; i<slots.length; i++){
             if(slots[i] != null){
@@ -118,8 +123,10 @@ public class Parking {
 
         if(slot != -1){
             System.out.println(slot);
+            return slot;
         }else{
             System.out.println("Not found");
+            return -1;
         }
     }
 
